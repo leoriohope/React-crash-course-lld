@@ -16,5 +16,9 @@ class StateLearn extends React.Component {
     }
 }
 
+StateLearn.propTypes = {
+    
+}
+
 
 export default StateLearn
