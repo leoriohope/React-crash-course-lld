@@ -8,10 +8,10 @@ class App extends Component {
 
     state = {
         todos: [
-            { id: "001", name: "吃饭", isDone: true },
-            { id: "002", name: "睡觉", isDone: true },
-            { id: "003", name: "打豆豆", isDone: true },
-            { id: "004", name: "逛街", isDone: true },
+            { id: "001", name: "吃饭", isDone: false },
+            { id: "002", name: "睡觉", isDone: false },
+            { id: "003", name: "打豆豆", isDone: false },
+            { id: "004", name: "逛街", isDone: false },
 
         ]
     }
@@ -35,7 +35,32 @@ class App extends Component {
         )
         //set state
         this.setState({todos: newTodos})
+    }
 
+    updateTodoAll = (isChecked) => {
+        const {todos} = this.state
+        const newTodos = todos.map((todo) => {
+            return {...todo, isDone: isChecked}
+        })
+        this.setState({todos: newTodos})
+    }
+
+    deleteTodo = (id) => {
+        // 拿到原来的todo
+        const {todos} = this.state
+        // 删除id对应的todo项
+        const newTodos = todos.filter((todo) => {
+            return todo.id !== id
+        })
+        this.setState({todos: newTodos})
+    }
+
+    deleteAllDone = () => {
+        const {todos} = this.state
+        const newTodos = todos.filter((todo) => {
+            return !todo.isDone
+        })
+        this.setState({todos: newTodos})
     }
 
     render() {
@@ -44,8 +69,8 @@ class App extends Component {
             <div className='todo-container'>
                 <div className='todo-wrap'>
                     <Header addTodo={this.addTodo}/>
-                    <List updateTodo={this.updateTodo} todos={todos}/>
-                    <Footer />
+                    <List deleteTodo={this.deleteTodo} updateTodo={this.updateTodo} todos={todos}/>
+                    <Footer deleteAllDone={this.deleteAllDone} updateTodoAll={this.updateTodoAll} todos={todos}/>
                 </div>
             </div>
         );
